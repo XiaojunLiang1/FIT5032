@@ -12,10 +12,29 @@
         <li class="nav-item">
           <router-link to="/about" class="nav-link" active-class="active">About</router-link>
         </li>
+        <li v-if="!isLogged" class="nav-item">
+          <router-link to="/login" class="nav-link" active-class="active">Login</router-link>
+        </li>
+        <li v-else class="nav-item">
+          <button type="button" class="btn btn-secondary" @click="logout">Log out</button>
+        </li>
       </ul>
     </header>
   </div>
 </template>
+
+<script setup>
+import {ref} from 'vue';
+
+const isLogged = ref(localStorage.getItem('isLogged') === 'true');
+
+const logout = () => {
+    localStorage.setItem('isLogged', 'false')
+    isLogged.value = false
+    // router.push('/');
+  }
+
+</script>
 
 <style scoped>
 .b-example-divider {
