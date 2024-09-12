@@ -27,6 +27,10 @@
         <li class="nav-item">
           <router-link to="/FireRegister" class="nav-link" active-class="active">Firebase Register</router-link>
         </li>
+        <li class="nav-item">
+          <button @click="logout">Logout</button>
+        </li>
+
     
       </ul>
     </header>
@@ -35,14 +39,32 @@
 
 <script setup>
 import {ref} from 'vue';
+import { getAuth, signOut } from "firebase/auth";
+import { useRouter } from "vue-router";
 
-const isLogged = ref(localStorage.getItem('isLogged') === 'true');
+// const isLogged = ref(localStorage.getItem('isLogged') === 'true');
+
+// const logout = () => {
+//     localStorage.setItem('isLogged', 'false')
+//     isLogged.value = false
+//     // router.push('/');
+//   }
+const auth = getAuth();
+const router = useRouter();
 
 const logout = () => {
-    localStorage.setItem('isLogged', 'false')
-    isLogged.value = false
-    // router.push('/');
-  }
+  signOut(auth)
+    .then(() => {
+      console.log("User signed out successfully");
+      console.log("current user:", auth.currentUser);
+      router.push("/login");
+    })
+    .catch((error) => {
+      console.error("Error during sign out: ", error);
+    });
+};
+
+
 
 </script>
 
