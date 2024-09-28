@@ -23,6 +23,7 @@ import {ref} from 'vue';
 import db from '../firebase/init.js';
 import { collection, addDoc } from 'firebase/firestore';
 import BookList from '../components/BookList.vue';
+import axios from 'axios';
 
 export default {
     setup() {
@@ -36,10 +37,10 @@ export default {
                     alert('ISBN must be a valid number');
                     return;
                 }
-                await addDoc(collection(db, 'books'), {
+                await axios.post('https://addbook-6amiscp6xa-uc.a.run.app', {
                     isbn: isbnNumber,
                     name: name.value
-                })
+                });
                 isbn.value = '';
                 name.value = '';
                 alert('Book added successfully!');

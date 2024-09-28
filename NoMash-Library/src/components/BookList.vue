@@ -22,8 +22,8 @@ export default {
 
     const fetchBooks = async () => {
       try {
-        const q = query(collection(db, 'books'), where('isbn', '>', 1000)
-        , orderBy('isbn','desc'), limit(3));
+        const q = query(collection(db, 'books')
+        , orderBy('isbn','desc'));
         //const q = query(collection(db, 'books'))
         const querySnapshot = await getDocs(q);
         const booksArray = [];
