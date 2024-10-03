@@ -27,6 +27,40 @@ exports.countBooks = onRequest((req, res) => {
   });
 });
 
+exports.getAllBooks = onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const boooksCollection = admin.firestore().collection("books");
+      const snapshot = await boooksCollection.get();
+      const books = snapshot.docs.map((doc) =>{
+        const data = doc.data();
+        return {
+          isbn: data.isbn,
+          name: data.name,
+        };
+      });
+      res.status(200).send({books});
+    } catch (error) {
+      console.error("Error counting books:", error.message);
+      res.status(500).send("error counting books");
+    }
+  });
+});
+
+exports.getAllBook = onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const booksCollection = admin.firestore().collection("books");
+      const snapshot = await booksCollection.get();
+      const count = snapshot.size;
+      res.status(200).send({count});
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("error getting books");
+    }
+  });
+});
+
 exports.addBook = onRequest((req, res) => {
   cors(req, res, async () => {
     try {
