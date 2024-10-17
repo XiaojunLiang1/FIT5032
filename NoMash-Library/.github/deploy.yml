@@ -24,8 +24,7 @@ jobs:
     - name: Build
       run: npm run build
 
-       # New step: Create .nojekyll file to prevent GitHub Pages from using Jekyll
-    - name: Create .nojekyll file
+    - name: Create .nojekyll to disable Jekyll
       run: echo "" > dist/.nojekyll
 
     - name: Deploy
